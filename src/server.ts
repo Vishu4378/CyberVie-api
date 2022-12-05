@@ -14,6 +14,10 @@ app.use(
 app.use(express.json());
 app.use(express.static("public"));
 
+app.get("/", (req, res) => {
+  res.json({ msg: "Hello" });
+});
+
 app.post("/upload", multer({ storage }).single("file"), (req, res, next) => {
   try {
     const file = req.file;
