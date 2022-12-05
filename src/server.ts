@@ -5,6 +5,7 @@ import cors from "cors";
 const app = express();
 const storage = multer.memoryStorage();
 
+const PORT = process.env.PORT ?? 5000;
 app.use(
   cors({
     origin: "*",
@@ -31,9 +32,10 @@ app.post("/upload", multer({ storage }).single("file"), (req, res, next) => {
     }`;
     fs.writeFile(filename, file.buffer, (err) => {
       if (err) {
-        console.log(err);
+        res.status(500).json({ error: "Error on File Upload" });
+        return;
       }
-      console.log("Ok");
+      res.json({ msg: "File Upload Successful" });
     });
     res.json("ok");
   } catch (error) {
@@ -50,6 +52,6 @@ app.get("/view", (req, res) => {
   }
 });
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
   console.log("Lsiting on 5000");
 });
