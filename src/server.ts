@@ -18,7 +18,6 @@ app.post("/upload", multer({ storage }).single("file"), (req, res, next) => {
   try {
     const file = req.file;
     const { username } = req.body;
-    console.log(JSON.stringify(req.body));
     if (!username) {
       res.status(400).json({ error: "Username is not defined" });
       return;
