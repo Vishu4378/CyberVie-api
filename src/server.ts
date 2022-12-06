@@ -41,7 +41,7 @@ app.post("/upload", multer({ storage }).single("file"), (req, res, next) => {
         res.status(500).json({ error: "Error on File Upload" });
         return;
       }
-      res.json({ msg: "File Upload Successful" });
+      res.json({ msg: "File Upload Successfully" });
     });
   } catch (error) {
     res.status(500).json({ error });
