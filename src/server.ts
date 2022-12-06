@@ -33,6 +33,9 @@ app.post("/upload", multer({ storage }).single("file"), (req, res, next) => {
     const filename = `public/${
       username + "^^^" + Date.now() + "." + file.originalname.split(".").pop()
     }`;
+    if (!fs.existsSync("public")) {
+      fs.mkdirSync("public");
+    }
     fs.writeFile(filename, file.buffer, (err) => {
       if (err) {
         res.status(500).json({ error: "Error on File Upload" });
@@ -40,7 +43,6 @@ app.post("/upload", multer({ storage }).single("file"), (req, res, next) => {
       }
       res.json({ msg: "File Upload Successful" });
     });
-    res.json("ok");
   } catch (error) {
     res.status(500).json({ error });
   }
@@ -48,6 +50,9 @@ app.post("/upload", multer({ storage }).single("file"), (req, res, next) => {
 
 app.get("/view", (req, res) => {
   try {
+    if (!fs.existsSync("public")) {
+      fs.mkdirSync("public");
+    }
     const filenames = fs.readdirSync("public");
     res.json(filenames);
   } catch (error) {
